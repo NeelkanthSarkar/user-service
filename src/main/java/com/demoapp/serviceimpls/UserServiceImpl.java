@@ -3,6 +3,7 @@ package com.demoapp.serviceimpls;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public ResponseEntity<UserResponse> saveNewUser(User user) {
+	    //String randomUserId = UUID.randomUUID().toString();
+		//to manually provide a random and unique userId to each user
 		User savedUser = userJpa.save(user);
 		UserResponse userResponse = UserMapper.mapUserToUserResponse(savedUser, new UserResponse());
 		
