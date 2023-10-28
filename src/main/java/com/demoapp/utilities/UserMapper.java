@@ -9,7 +9,8 @@ public class UserMapper {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static UserResponse mapUserToUserResponse(User user,UserResponse userResponse) {
+	public static UserResponse mapUserToUserResponse(User user) {
+		UserResponse userResponse = new UserResponse();
 		userResponse.setUserId(user.getUserId());
 		userResponse.setUsername(user.getUsername());
 		userResponse.setPassword(user.getPassword());
