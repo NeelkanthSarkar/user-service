@@ -24,12 +24,13 @@ public class UserValidationExceptionHandling {
     	return resultMap;
 	}
 	
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(UserByIdNotFoundException.class)
 	public Map<String,String> handleUserByIdNotFoundException(UserByIdNotFoundException ex){
 		
 		Map<String,String> resultMap = new HashMap<>();
 		resultMap.put("errorMessage",ex.getMessage());
+		resultMap.put("code", "400");
 		return resultMap;
 	}
 }

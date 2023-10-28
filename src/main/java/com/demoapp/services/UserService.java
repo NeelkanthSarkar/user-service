@@ -1,6 +1,7 @@
 package com.demoapp.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
@@ -15,5 +16,5 @@ public interface UserService {
 	ResponseEntity<UserResponse> getUserById(Integer userId) throws UserByIdNotFoundException; 
 	ResponseEntity<UserResponse> saveNewUser(User user);
 	ResponseEntity<DeleteUserResponseBody> deleteAUser(Integer userId);
-	ResponseEntity<UserResponse> updateUser(User user);
+	ResponseEntity<UserResponse> updateUser(Integer userId,Map<String,Object> userData)throws UserByIdNotFoundException;
 }
