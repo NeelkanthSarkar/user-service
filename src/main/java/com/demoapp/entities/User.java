@@ -23,12 +23,11 @@ public class User {
 	private String username;
 	
 	@Column(name = "password")
-	@Pattern(regexp = "^[a-zA-Z0-9._-]{8,30}$", message="Password must be minimum 8 and maximum 30 chars long")
+	@Pattern(regexp = "^[a-zA-Z0-9/./_/-/$/#/@/!]{8,30}$", message="Password must be minimum 8 and maximum 30 chars long(special chars allowed - .,_,-,$,#,!,@)")
 	private String password;
 	
 	@Column(name = "email")
-	@Email(message = "Invalid Email address")
-	@NotBlank(message = "Email cannot be empty")
+	@Pattern(regexp = "^([a-zA-Z]+)([a-zA-Z0-9/./_/-]*)@([a-zA-Z]+).([a-zA-Z]{2,3}).([a-zA-Z]{2,3})?$" , message = "Invalid Email(characters,numbers, . , _ and - are allowwed) Eg., abc.someone12@xyz.com")
 	private String email;
 
 	public User() {
