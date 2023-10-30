@@ -8,7 +8,7 @@ public class UserMapper {
 	public UserMapper() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public static UserResponse mapUserToUserResponse(User user) {
 		UserResponse userResponse = new UserResponse();
 		userResponse.setUserId(user.getUserId());
@@ -17,5 +17,5 @@ public class UserMapper {
 		userResponse.setEmail(user.getEmail());
 		return userResponse;
 	}
-	
+
 }
