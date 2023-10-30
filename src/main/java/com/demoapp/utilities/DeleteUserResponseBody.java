@@ -1,29 +1,19 @@
 package com.demoapp.utilities;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class DeleteUserResponseBody {
-	
-	private String result;
-	
 
-	public DeleteUserResponseBody() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
-	public DeleteUserResponseBody(String result) {
-		super();
-		this.result = result;
-	}
+	private Integer httpStatusCode;
+	private String message;
 
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
-	}
-	
-	
 
 }

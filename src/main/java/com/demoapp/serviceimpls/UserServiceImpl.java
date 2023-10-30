@@ -28,22 +28,22 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserJPA userJpa;
-	
+
 	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-	
-	
+
+
 	@Override
 	public ResponseEntity<List<UserResponse>> getAllAvailableUsers() {
 		Iterable<User> iterable = userJpa.findAll();
 
-		List<User> list = new ArrayList<User>();
+		List<User> list = new ArrayList<>();
 		iterable.forEach(list::add);
 		List<UserResponse> userList = list.stream().map(e->
 		{
 			return UserMapper.mapUserToUserResponse(e);
 		}
 		).collect(Collectors.toList());
-		
+
 		return new ResponseEntity<>((userList),HttpStatus.FOUND);
 	}
 
@@ -53,38 +53,41 @@ public class UserServiceImpl implements UserService{
 		//to manually provide a random and unique userId to each user
 		User savedUser = userJpa.save(user);
 		UserResponse userResponse = UserMapper.mapUserToUserResponse(savedUser);
-		
+
 		return new ResponseEntity<>(userResponse,HttpStatus.CREATED);
 	}
 
 	@Override
-	public ResponseEntity<DeleteUserResponseBody> deleteAUser(Integer userId) {
+	public ResponseEntity<DeleteUserResponseBody> deleteAUser(Integer userId) throws UserByIdNotFoundException {
 		Optional<User> user = userJpa.findById(userId);
 	    if(user.isPresent()) {
-	    	userJpa.delete(user.get());  
-	    	return new ResponseEntity<>(new DeleteUserResponseBody("success"),HttpStatus.OK);
+	    	userJpa.deleteById(userId);
+	    	DeleteUserResponseBody dURB = new DeleteUserResponseBody(200,"User with id = "+userId+" is deleted succesfully.");
+	    	return new ResponseEntity<DeleteUserResponseBody>(dURB,HttpStatus.OK);
+	  
 	    }else {
-	    	return new ResponseEntity<>(new DeleteUserResponseBody("UserId does not exists"),HttpStatus.INTERNAL_SERVER_ERROR);
+	        throw new UserByIdNotFoundException("User not found with id = "+userId);
 	    }
-	
+		
+
 	}
 
 	@Override
 	public ResponseEntity<UserResponse> updateUser(Integer userId,Map<String,Object> userData) throws UserByIdNotFoundException {
-		
+
 		Optional<User> userRes = userJpa.findById(userId);
-		
+
 		if(userRes.isPresent()) {
 			logger.info("user is present = {}",userRes);
 			userData.forEach((key,value)->{
 				Field field = ReflectionUtils.findField(User.class, key);
 				field.setAccessible(true);
-				ReflectionUtils.setField(field, userRes.get(), value);				
+				ReflectionUtils.setField(field, userRes.get(), value);
 			});
 			logger.info("user data after update = {}",userRes.get());
 			UserResponse userResponse = UserMapper.mapUserToUserResponse(userRes.get());
 			return new ResponseEntity<>(userResponse,HttpStatus.OK);
-			
+
 		}else {
 			throw new UserByIdNotFoundException("User not found with id = "+userId);
 		}

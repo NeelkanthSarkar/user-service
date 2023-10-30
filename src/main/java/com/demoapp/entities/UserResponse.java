@@ -3,16 +3,16 @@ package com.demoapp.entities;
 public class UserResponse {
 
 	private Integer userId;
-	
+
 	private String username;
-	
+
 	private String password;
-	
+
 	private String email;
 
 	public UserResponse() {
 		super();
-		
+
 	}
 
 	public UserResponse(Integer userId, String username, String password, String email) {
@@ -60,7 +60,7 @@ public class UserResponse {
 		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email
 				+ "]";
 	}
-	
-	
-	
+
+
+
 }
